@@ -4,11 +4,22 @@ import numpy as np
 import joblib
 import xgboost as xgb
 from xgboost import XGBClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+import warnings
+warnings.filterwarnings("ignore")
 
 st.title('Obesity Classifier AI')
-classifier = joblib.load('data/model_obesity.joblib')
+#classifier = joblib.load('data/model_obesity.xgb')
 
-st.write("")
+best_model = XGBClassifier(learning_rate=.1, n_estimators=200, max_depth=7, min_chil_weight=1, gamma=0, subsample=.8, colsample_bytree=.6)
+best_model.load_model('data/model_obesity_alex.model')
+# steps = [("scaler", StandardScaler()),
+#     ("xgb", model)]
+# best_model = Pipeline(steps)
+
+
 def user_input_features():
 
     Gender = st.sidebar.selectbox('Gender: (Male: 1, Female: 0)',(0,1))
@@ -47,11 +58,19 @@ def user_input_features():
 
     return features
 
-input_df = user_input_features()
+X_train = pd.read_csv('data/cleaned_train_obesity', index_col=0)
+X_test = pd.read_csv('data/cleaned_test_obesity',index_col=0)
+y_test = pd.read_csv('data/y_test_obesity',index_col=0)
+
+scaler = StandardScaler().fit(X_train)
+st.write(best_model.score(scaler.transform(X_test),y_test))
+input_df = scaler.transform(user_input_features())
+# xgb.DMatrix(input_df.values, feature_names=input_df.columns)
+
 
 def prediction(): 
-    
-    prediction = classifier.predict(input_df)
+    # prediction = best_model.predict(xgb.DMatrix(input_df.values, feature_names=input_df.columns))
+    prediction = best_model.predict(input_df)
     if prediction == 0:
         st.success("Underweight")
     if prediction == 1:
