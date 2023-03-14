@@ -6,7 +6,7 @@ import xgboost as xgb
 from xgboost import XGBClassifier
 
 st.title('Obesity Classifier AI')
-classifier = joblib.load('model_obesity.joblib')
+classifier = joblib.load('data/model_obesity.joblib')
 
 st.write("")
 def user_input_features():
