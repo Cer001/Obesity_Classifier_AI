@@ -47,7 +47,8 @@ def user_input_features():
                            options=('0-2 hours', '3-5 hours', 'more than 5 hours'), key=11)
     CALC = st.select_slider('How often do you drink alcohol?',\
                         options=('Never', 'Sometimes', 'Frequently', 'Always'), key=12)
-    MTRANS = st.select_slider('Which transportation do you usually use? (car: 0, bike: 1, motorbike: 2, public transport: 3, walking: 4, )',(0,1,2,3,4), key=13)
+    MTRANS = st.select_slider('Which transportation do you usually use?',\
+                              options=('car', 'bike', 'motorbike', 'public transport', 'walking'), key=13)
 
     data = {
             'Gender':[1 if 'Male' else 0], 
