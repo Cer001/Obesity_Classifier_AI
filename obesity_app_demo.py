@@ -24,7 +24,7 @@ def user_input_features():
 
     Gender = st.select_slider('Gender',\
                               options=("Male", "Female"), key=0)
-    Age = st.slider(min_value=1, max_value=80 label="Age (0-100)", key=1)
+    Age = st.slider(min_value=1, max_value=80, label="Age (0-100)", key=1)
     family_history_with_overweight = st.select_slider('Has a family member suffered or suffers from being overweight?',\
                                                       options=('No', 'Yes'), key=2)
     FAVC = st.select_slider('Do you eat high caloric food frequently?',\
